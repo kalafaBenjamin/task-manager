@@ -8,17 +8,20 @@ router = DefaultRouter()
 
 router.register(
     "projects",
-    ProjectViewSet
+    ProjectViewSet,
+    basename="project"
 )
 
 router.register(
     "tasks",
-    TaskViewSet
+    TaskViewSet,
+    basename="task"
 )
 
 router.register(
     "comments",
-    CommentViewSet
+    CommentViewSet,
+    basename="comment"
 )
 
 urlpatterns = router.urls
