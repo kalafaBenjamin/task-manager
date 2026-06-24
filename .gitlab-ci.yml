@@ -1,0 +1,14 @@
+stages:
+  - test
+
+test:
+  stage: test
+
+  image: python:3.13
+
+  before_script:
+    - pip install -r backend/requirements.txt
+
+  script:
+    - cd backend
+    - python manage.py test

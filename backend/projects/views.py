@@ -1,36 +1,11 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.filters import SearchFilter, OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend
-
-from .models import Project
-from .serializers import ProjectSerializer
+from projects.services.project_service import (
+    ProjectService
+)
 
 
-class ProjectViewSet(ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+def perform_create(self, serializer):
 
-    filter_backends = [
-        DjangoFilterBackend,
-        SearchFilter,
-        OrderingFilter,
-    ]
-
-    search_fields = [
-        "name",
-        "description",
-    ]
-
-    ordering_fields = [
-        "created_at",
-        "updated_at",
-        "name",
-    ]
-
-    def get_queryset(self):
-        return Project.objects.filter(
-            owner=self.request.user
-        )
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    ProjectService.create_project(
+        owner=self.request.user,
+        data=serializer.validated_data
+    )
