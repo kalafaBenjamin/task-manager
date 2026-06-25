@@ -1,29 +1,31 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+*.so
 
-# Virtual Environment
+# Virtual environments
 venv/
-.env
+.venv/
+env/
 
 # Django
+*.log
 db.sqlite3
+staticfiles/
+media/
 
-# IDE
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
 .vscode/
 .idea/
-
-# Logs
-*.log
-
-# OS
 .DS_Store
+Thumbs.db
 
-# Pytest
-.pytest_cache/
-
-# Coverage
-htmlcov/
-.coverage
+# Docker
+postgres_data/
