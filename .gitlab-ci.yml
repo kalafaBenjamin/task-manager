@@ -1,31 +1,32 @@
-image: python:3.13
-
 stages:
   - test
 
-variables:
-  POSTGRES_DB: taskmanager
-  POSTGRES_USER: taskmanager
-  POSTGRES_PASSWORD: taskmanager_password
-  DB_NAME: taskmanager
-  DB_USER: taskmanager
-  DB_PASSWORD: taskmanager_password
-  DB_HOST: postgres
-  DB_PORT: 5432
-  SECRET_KEY: test-secret-key
-  DEBUG: "False"
-
-services:
-  - name: postgres:17
-    alias: postgres
-
-before_script:
-  - cd backend
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
-  - python manage.py migrate
-
-test:
+tests:
   stage: test
+  image: python:3.13
+
+  services:
+    - name: postgres:17
+      alias: db
+
+  variables:
+    POSTGRES_DB: taskmanager_test
+    POSTGRES_USER: taskmanager
+    POSTGRES_PASSWORD: taskmanager_password
+
+    DB_NAME: taskmanager_test
+    DB_USER: taskmanager
+    DB_PASSWORD: taskmanager_password
+    DB_HOST: db
+    DB_PORT: 5432
+
+    SECRET_KEY: test-secret-key
+    DEBUG: "False"
+
+  before_script:
+    - cd backend
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+
   script:
-    - python manage.py test
+    - python manage.py test -v 2
